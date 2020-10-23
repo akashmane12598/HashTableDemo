@@ -16,7 +16,7 @@ namespace HashTableDemo
 
         public void Add(K key, V value)
         {
-            int position = GetArrayPosition(key);  
+            int position = GetArrayPosition(key);  // |-5| =5 |3|=3 |-3|=3
             LinkedList<KeyValue<K, V>> linkedList = GetLinkedList(position);
             KeyValue<K, V> item = new KeyValue<K, V>() { Key = key, Value = value };
             linkedList.AddLast(item);
@@ -42,7 +42,30 @@ namespace HashTableDemo
             }
         }
 
-        public V Get(K key)
+        public KeyValue<K,V> GetItem(K key)
+        {
+            int position = GetArrayPosition(key);
+            LinkedList<KeyValue<K, V>> linkedList = GetLinkedList(position);
+            foreach (KeyValue<K, V> item in linkedList)
+            {
+                if (item.Key.Equals(key))
+                {
+                    return item;
+                }
+            }
+            return default;
+        }
+        public void SetFrequency(K key, V value)
+        {
+            int position = GetArrayPosition(key);
+            LinkedList<KeyValue<K, V>> linkedList = GetLinkedList(position);
+
+            KeyValue<K, V> newItem = new KeyValue<K, V>() { Key = key, Value = value };
+            KeyValue<K, V> item = GetItem(key);
+
+            linkedList.Find(item).Value = newItem;
+        }
+        public V GetFrequency(K key)
         {
             int position = GetArrayPosition(key);
             LinkedList<KeyValue<K, V>> linkedList = GetLinkedList(position);
